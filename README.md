@@ -1,1 +1,1 @@
-# Sugoku
+# Sugoku Mental
