@@ -4,3 +4,5 @@ import { combineReducers } from 'redux'
 const rootReducer = combineReducers({
     sugoku
 })
+
+export default rootReducer

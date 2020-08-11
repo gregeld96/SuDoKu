@@ -1,42 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import axios from 'axios'
-import Section from './components/Section'
-// import { useDispatch, useSelector} from 'react-redux'
-// import { setBoardAsync } from './store/actions/sugokuActions'
+import React from 'react';
+import { Provider } from 'react-redux'
+import store from './store'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {
+  Home,
+  Board,
+  Finish
+} from './screens'
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [board, setBoard] = useState([])
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: 'https://sugoku.herokuapp.com/board'
-    })
-        .then(({data}) => {
-          setBoard(data.board)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-  })
-
   return (
-      <View style={styles.container}>
-        {
-          board && board.map((section, index) => (
-            <Section key={index} section={section} />
-          ))
-        }
-      </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator headerMode="none">
+          <Stack.Screen name="Start" component={Home} />
+          <Stack.Screen name="Board" component={Board} />
+          <Stack.Screen name="Finish" component={Finish} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
