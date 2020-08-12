@@ -1,23 +1,25 @@
 import Board from '../components/Board'
 import { StyleSheet, View, Button } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux'
 import CountDown from 'react-native-countdown-component';
 
 export default function GameBoard ({ navigation, route }) {
     const { name, difficulty } = route.params
     const status = useSelector(state => state.sugoku.status)
+    let [time, setTime] = useState(0)
+    let initialTime = 200
     let stop = ""
-    console.log(status)
     if(status === false) stop = true
     else stop = false
 
     return (
         <View style={styles.container}>
             <CountDown
-                until={180}
+                until={initialTime}
                 size={30}
-                onFinish={() => navigation.navigate('Finish', { name, status })}
+                onFinish={() => navigation.navigate('Finish', { name, status, time: initialTime })}
+                onChange={(time) => setTime(initialTime - time)}
                 digitStyle={{backgroundColor: '#FFF'}}
                 digitTxtStyle={{color: '#1CC625'}}
                 timeLabelStyle={{color: "white"}}
@@ -30,12 +32,12 @@ export default function GameBoard ({ navigation, route }) {
                 !status ?  <Button
                 title="Giving Up"
                 onPress={() =>
-                navigation.navigate('Finish', { name, status })
+                navigation.navigate('Finish', { name, status, time: initialTime })
                 } />
                 : <Button
                 title="Finished"
                 onPress={() =>
-                navigation.navigate('Finish', { name, status })
+                navigation.navigate('Finish', { name, status, time })
                 } />
             }    
         </View>

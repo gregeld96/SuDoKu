@@ -8,9 +8,11 @@ export default function Board({ difficulty, name }) {
   const board = useSelector(state => state.sugoku.board)
   const [newBoard, setNew] = useState([])
   const [message, setMessage] = useState("")
+  const [loading, setLoading] = useState(false)
   
   useEffect(() => {
     dispatch(setBoardAsync(difficulty))
+    setLoading(true)
   }, [])
 
   useEffect(() => {
@@ -79,9 +81,14 @@ export default function Board({ difficulty, name }) {
       .catch(console.warn)
   }
 
+  if(!loading) return(
+    <View>
+      <Text>Loading......</Text>
+    </View>
+  )
   return (
       <View>
-        <Text style={styles.title}>{!message || message === 'broken' || message === 'unsolved' ? name : message}</Text>
+        <Text style={styles.title}>{!message ? name : message}</Text>
         {
           newBoard.length > 0 && newBoard.map((section, indexOne) => {
             const thirdChild = ((indexOne + 1) % 3) === 0 ? 2 : 0
@@ -96,7 +103,7 @@ export default function Board({ difficulty, name }) {
                         <View key={indexTwo} style={{ height: 30, width: 30, borderWidth: 0.5, borderColor: 'gray', padding:1, borderRightWidth: thirdChild, borderLeftWidth: firstChild }}>
                             {
                                 <TextInput 
-                                    style={{textAlign:"center", fontSize: 15, color: "white"}} 
+                                    style={board[indexOne][indexTwo] === 0 ? {textAlign:"center", fontSize: 15, color: "red"} : {textAlign:"center", fontSize: 15, color: "white",fontWeight: "700", backgroundColor: "teal"}} 
                                     maxLength={1}  
                                     value={block > 0 ? String(block) : ""} 
                                     onChangeText={(text) => blockHandler(text, {indexOne, indexTwo})}

@@ -18,7 +18,7 @@ export default function Home ({ navigation }) {
         <View style={styles.container}>
             <Text style={{fontSize: 32, color: "white"}}>BORED SUGOKU</Text>
             <Text style={styles.title}>Your Name</Text>
-            <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)} />
+            <TextInput style={styles.input} value={name} placeholder="Your Name...." onChangeText={(text) => setName(text)} />
             <Text style={styles.title}>Choose Your Difficulty:</Text>
             <View style={styles.btnSpace}>
                 <Button disabled={difficulty === 'easy'} title="Easy" onPress={() => setDifficulty('easy')} />
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
     input: {
         fontSize: 18, 
-        borderWidth:2,
+        borderBottomWidth: 2,
         width:250, 
         margin: 10, 
         color: "white", 

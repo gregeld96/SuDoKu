@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sugoku-app",
-    "slug": "sugoku-app",
+    "name": "bored-sugoku",
+    "slug": "bored-sugoku",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,6 +21,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Play sugoku or sudoku or yeah play"
   }
 }
